@@ -62,8 +62,10 @@ export default function RootDashboard({
         id="dashboard"
         className="h-screen pt-[96px] sm:overflow-auto overflow-hidden"
       >
-        {children}
-        <ModalRoot />
+        <Suspense fallback={<div>Loading...</div>}>
+          {children}
+          <ModalRoot />
+        </Suspense>
         <footer className="sm:hidden flex items-center justify-around bg-[#131921] w-full">
           <Link
             href="/dashboard"
