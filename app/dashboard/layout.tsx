@@ -5,6 +5,7 @@ import { SearchProduct } from "../ui/dashboard/SearchProduct";
 import { ModalRoot } from "../ui/dashboard/modal/ModalRoot";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default function RootDashboard({
   children,
@@ -14,7 +15,10 @@ export default function RootDashboard({
       <header className="fixed top-0 z-[999px] min-w-full h-24 bg-[#131921] flex flex-col justify-around">
         <div className="flex justify-evenly sm:items-center sm:h-full">
           <div className="flex flex-row items-center p-2 h-full">
-            <Link href="/dashboard" className="flex items-center hover:cursor-pointer">
+            <Link
+              href="/dashboard"
+              className="flex items-center hover:cursor-pointer"
+            >
               <p className="md:text-[26px] text-[16px]">Di Napoli</p>
               <Image
                 src="/italy.svg"
@@ -23,13 +27,15 @@ export default function RootDashboard({
                 height={25}
                 className="w-[30px] h-[25px]"
               />
-            </Link >
+            </Link>
             <div className="sm:block hidden h-[60%]">
               <CategoriesIcon width={30} height={25} />
             </div>
           </div>
           <div className="lgg:w-[850px] lg:w-[650px] w-96 hidden sm:flex">
-            <SearchProduct />
+            <Suspense fallback={<h2>Loading...</h2>}>
+              <SearchProduct />
+            </Suspense>
           </div>
           <div className="sm:flex sm:items-center hidden">
             <div className="flex items-center">
@@ -46,7 +52,9 @@ export default function RootDashboard({
           </div>
         </div>
         <div className="w-full sm:hidden flex items-center  pl-2 h-full">
-          <SearchProduct />
+          <Suspense fallback={<h2>Loading...</h2>}>
+            <SearchProduct />
+          </Suspense>
         </div>
       </header>
 
@@ -57,7 +65,10 @@ export default function RootDashboard({
         {children}
         <ModalRoot />
         <footer className="sm:hidden flex items-center justify-around bg-[#131921] w-full">
-          <Link href='/dashboard' className="flex items-center gap-1 w-[50px] flex-col hover:bg-black/25 hover:cursor-pointer focus-visible:bg-black/25">
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-1 w-[50px] flex-col hover:bg-black/25 hover:cursor-pointer focus-visible:bg-black/25"
+          >
             <HomeIcon width={30} height={20} />
             <p>Home</p>
           </Link>
