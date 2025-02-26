@@ -1,15 +1,22 @@
 "use client";
 
 import { useDashboard } from "@/app/hooks/useContext";
-import { UserCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  PowerIcon,
+  UserCircleIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { ChevronRight } from "react-feather";
 import { ListItem } from "./categoriesModalCompo/list-items";
+import { Session } from "next-auth";
+import Link from "next/link";
+import { logout } from "@/app/lib/actions";
 
-export const CategoriesModal = () => {
+export const CategoriesModal = ({ session }: { session: Session | null }) => {
   const { handleModal } = useDashboard();
   const [axis, setAxis] = useState(0);
-  const fakeElectronicItems = ["SSD", "WD", "Screen"]
+  const fakeElectronicItems = ["SSD", "WD", "Screen"];
 
   function handleAxis(axis: number) {
     setAxis(axis);
@@ -18,12 +25,24 @@ export const CategoriesModal = () => {
   return (
     <div className="bg-white w-96 h-full" onClick={(e) => e.stopPropagation()}>
       <div className="flex items-center w-full bg-[#131921] h-12 justify-between">
-        <a href="/" id="link-to-signIn" className="flex items-center">
+        {!!session ? (
           <span className="ml-8 flex items-center gap-2">
             <UserCircleIcon width={26} />
-            <h2 className="text-white font-semibold text-lg">Hello, sign in</h2>
+            <h2 className="text-white font-semibold text-lg">
+              Hello, {session.user?.name}
+            </h2>
           </span>
-        </a>
+        ) : (
+          <a href="/login" id="link-to-signIn" className="flex items-center">
+            <span className="ml-8 flex items-center gap-2">
+              <UserCircleIcon width={26} />
+              <h2 className="text-white font-semibold text-lg">
+                Hello, sign in
+              </h2>
+            </span>
+          </a>
+        )}
+
         <button
           aria-label="close modal"
           type="button"
@@ -62,13 +81,34 @@ export const CategoriesModal = () => {
                 <h2 className="text-black-medium ml-8 font-bold text-lg">
                   Help & Settings
                 </h2>
-                <a className="group pl-8 h-10 hover:bg-blue-gray-100/50 hover:cursor-pointer flex items-center">
-                  <p className="text-black-medium w-[85%] text-sm">Sign in</p>
-                </a>
+                {!!session ? (
+                  <div className="group pl-8 h-10 gap-2 hover:bg-blue-gray-100/50 hover:cursor-pointer">
+                    <form action={logout} className="w-full h-full">
+                      <button
+                        type="submit"
+                        className="text-black-medium w-full text-sm flex items-center gap-2 h-full"
+                      >
+                      <PowerIcon className="h-6 text-black-medium" />
+                        Sign out
+                      </button>
+                    </form>
+                  </div>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="group pl-8 h-10 hover:bg-blue-gray-100/50 hover:cursor-pointer flex items-center"
+                  >
+                    <p className="text-black-medium w-max text-sm">Sign in</p>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
-          <ListItem category="Electronics" handleAxis={handleAxis} items={fakeElectronicItems} />
+          <ListItem
+            category="Electronics"
+            handleAxis={handleAxis}
+            items={fakeElectronicItems}
+          />
         </div>
       </section>
     </div>

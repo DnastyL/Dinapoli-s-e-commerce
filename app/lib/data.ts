@@ -1,17 +1,12 @@
 import { eletronicProducts } from "./definitions";
+import { neon } from "@neondatabase/serverless";
 
-export async function fetchFakeElectronics() {
+const sql = neon(`${process.env.DATABASE_URL}`);
+
+export async function fetchElectronicProducts() {
   try {
-    const request = await fetch(
-      "https://fakestoreapi.com/products/category/electronics"
-    );
-    if (!request.ok) {
-      throw new Error("Failed to request electronic products");
-    }
-
-    const data: eletronicProducts[] = await request.json();
-
-    return data;
+    const data = await sql`SELECT * FROM products`;
+    return data as eletronicProducts[];
   } catch (error) {
     console.log(error);
   }
@@ -19,21 +14,14 @@ export async function fetchFakeElectronics() {
 
 export async function fetchFilteredEletronics(query: string) {
   try {
-    const req = await fetch(
-      "https://fakestoreapi.com/products/category/electronics"
-    );
-    if (!req.ok) {
-      throw new Error("Failed to request a specific eletronic product");
-    }
-    const data: eletronicProducts[] = await req.json();
-
-    const filterData = data.filter(
-      (p) =>
-        p.title.toLocaleLowerCase().includes(query.toLocaleLowerCase()) ||
-        p.description.toLocaleLowerCase().includes(query.toLocaleLowerCase())
-    );
-
-    return filterData;
+    const products = await sql`SELECT 
+    products.id, products.title,
+    products.description, products.price, products.image_url FROM products
+    WHERE
+      products.title ILIKE ${`%${query}%`} OR
+      products.description ILIKE ${`%${query}%`}
+    `;
+    return products as eletronicProducts[];
   } catch (err) {
     console.log(err);
   }

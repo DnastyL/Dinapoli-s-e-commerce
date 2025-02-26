@@ -2,13 +2,13 @@
 
 import { ImageSlider } from "../ui/dashboard/ImageSlider";
 import { ProductsSlider } from "../ui/dashboard/ProductsSlider";
-import { ModalRoot } from "../ui/dashboard/modal/ModalRoot";
-import { fetchFakeElectronics } from "@/app/lib/data";
+import { fetchElectronicProducts } from "@/app/lib/data";
 
 export default async function Dashboard() {
-  const electronicProducts = await fetchFakeElectronics();
+  const electronicProducts = await fetchElectronicProducts();
+
   return (
-    <main className="sm:h-full  h-[814px] overflow-auto">
+    <main className="sm:h-full h-[814px] overflow-auto">
       <div className="flex items-center justify-center py-3">
         <ImageSlider autoSlideInterval={3000} />
       </div>

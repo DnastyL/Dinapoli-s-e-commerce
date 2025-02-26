@@ -42,7 +42,7 @@ export const CartIcon = ({ width, height }: CartIconType) => {
         <p>Cart</p>
       </div>
       {itemsInCart > 0 && (
-        <span className="sm:block hidden absolute sm:bottom-6 sm:left-11 md:left-[4.25rem] bottom-7 left-8 bg-green-100 rounded-xl h-5 w-5 text-center text-black text-sm/6">
+        <span className="sm:block hidden absolute sm:bottom-6 sm:left-11 md:left-14 bottom-7 bg-green-100 rounded-xl h-5 w-5 text-center text-black text-sm/6">
           {itemsInCart}
         </span>
       )}

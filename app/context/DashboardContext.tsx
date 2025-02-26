@@ -30,8 +30,8 @@ export const DashboardProvider = ({
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log("categories: ", isCategoriesOpen);
-  console.log("cart: ", isCartOpen);
+
+
 
   const handleModal = (isCart?: boolean, isCategories?: boolean) => {
     if (isCart) return setIsCartOpen(!isCartOpen);

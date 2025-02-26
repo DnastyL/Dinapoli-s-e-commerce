@@ -6,6 +6,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export const CartModal = () => {
@@ -81,14 +82,19 @@ export const CartModal = () => {
               </h2>
             )}
           </div>
-          <Button
-            variant="outlined"
-            color="green"
-            size="sm"
-            className="rounded-full focus:ring-0 h-9 w-32"
-          >
-            Go to Cart
-          </Button>
+          {cartProducts.length && (
+            <Link href="/cart">
+              <Button
+                variant="outlined"
+                color="green"
+                size="sm"
+                className="rounded-full focus:ring-0 h-9 w-32"
+                onClick={() => handleModal(true)}
+              >
+                Go to Cart
+              </Button>
+            </Link>
+          )}
         </div>
 
         <div className="overflow-y-auto h-2/3">
@@ -99,7 +105,7 @@ export const CartModal = () => {
             >
               <Image
                 alt="product-image"
-                src={prod.image}
+                src={prod.image_url}
                 width={200}
                 height={150}
                 className="h-[150px] w-[150px] aspect-square"

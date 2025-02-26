@@ -2,6 +2,7 @@
   "name": "e-commerce",
   "version": "0.1.0",
   "private": true,
+  
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,14 +12,21 @@
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@material-tailwind/react": "^2.1.10",
+    "@neondatabase/serverless": "^0.10.4",
+    "@vercel/postgres": "^0.10.0",
+    "bcrypt": "^5.1.1",
     "clsx": "^2.1.1",
     "lodash": "^4.17.21",
     "next": "14.2.6",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-feather": "^2.0.10"
+    "next-auth": "^5.0.0-beta.25",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-feather": "^2.0.10",
+    "uuid": "^11.0.5",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/lodash": "^4.17.13",
     "@types/node": "^20",
     "@types/react": "18.2.42",

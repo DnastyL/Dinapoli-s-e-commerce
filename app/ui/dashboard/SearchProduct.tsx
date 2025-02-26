@@ -4,35 +4,34 @@ import { useState } from "react";
 import { IconButton } from "@material-tailwind/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
-export const SearchProduct = ({}) => {
+export const SearchProduct = () => {
   const [query, setQuery] = useState<string | undefined>(undefined);
-  const [categorySelected, setCategorySelected] = useState('All')
+  const [categorySelected, setCategorySelected] = useState("All");
   const searchParams = useSearchParams();
   const { replace, push } = useRouter();
   const pathName = usePathname();
-
 
   const handleSearch = (inputQuery: string | undefined) => {
     return inputQuery ? setQuery(inputQuery.trim()) : setQuery(undefined);
   };
 
+    console.log(query)
   const handleQuery = () => {
     const params = new URLSearchParams(searchParams);
 
     if (query) {
       params.set("query", query);
-      params.set("category", categorySelected.trim())
-      if (pathName === "/dashboard") {
-        push(`${pathName}/search-results?${params.toString()}`);
+      params.set("category", categorySelected.trim());
+      if (pathName === "/") {
+        push(`/search-results?${params.toString()}`);
       } else {
-        replace(`${pathName}?${params.toString()}`);
+        replace(`search-results?${params.toString()}`);
       }
     } else {
       params.delete("query");
-      params.delete("category")
+      params.delete("category");
     }
   };
-
 
   return (
     <>

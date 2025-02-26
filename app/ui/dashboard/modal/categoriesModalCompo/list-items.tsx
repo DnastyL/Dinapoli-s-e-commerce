@@ -19,7 +19,7 @@ export const ListItem = ({ handleAxis, category, items }: ListItemProps) => {
     params.set("query", query);
     params.set("categories", category);
 
-    replace(`/dashboard/search-results?${params.toString()}`);
+    replace(`/search-results?${params.toString()}`);
   };
 
   return (

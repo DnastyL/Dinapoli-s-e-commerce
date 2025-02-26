@@ -5,8 +5,9 @@ import { useEffect } from "react";
 import { CartModal } from "./cart-modal";
 import { CategoriesModal } from "./categories-modal";
 import clsx from "clsx";
+import { Session } from "next-auth";
 
-export const ModalRoot = () => {
+export const ModalRoot = ({ session }: { session: Session | null }) => {
   const { isCartOpen, isCategoriesOpen, handleModal } = useDashboard();
 
   useEffect(() => {
@@ -42,7 +43,7 @@ export const ModalRoot = () => {
               : `translateX(-599px)`,
           }}
         >
-          <CategoriesModal />
+          <CategoriesModal session={session} />
         </div>
 
         <div

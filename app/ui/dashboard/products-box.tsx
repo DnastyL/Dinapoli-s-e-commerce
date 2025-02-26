@@ -17,7 +17,6 @@ export const ProductsBox = ({electronicProducts}: {electronicProducts: eletronic
       });
   };
 
-  console.log()
 
 
   return (
@@ -30,7 +29,7 @@ export const ProductsBox = ({electronicProducts}: {electronicProducts: eletronic
         >
           <Image
             alt="product image"
-            src={prod.image}
+            src={prod.image_url}
             width={200}
             height={150}
             className="h-[180px] w-auto"

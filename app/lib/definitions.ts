@@ -4,11 +4,18 @@ export type eletronicProducts = {
   price: number;
   description: string;
   category: "eletronics";
-  image: string;
+  image_url: string;
   rating: {
     rate: number;
     count: number;
   };
   quantity: number
 };
+
+export type User = {
+  id: string;
+  userName: string;
+  email: string;
+  password: string;
+}
 
