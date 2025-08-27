@@ -11,22 +11,49 @@ import { useRouter } from "next/navigation";
 
 type cartProductsType = {
   electronicProducts: eletronicProducts[] | undefined;
-  randomNumber: number;
   user: User | undefined;
 };
 
 export const CartProductBox = ({
   electronicProducts,
-  randomNumber,
   user,
 }: cartProductsType) => {
   const { state, dispatch } = useDashboard();
+  const [loading, setLoading] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
   const [amountInCart, setAmountInCart] = useState(0);
   const { push } = useRouter();
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!user) return push(`/login`);
+    setLoading(true);
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      const response = await fetch(`${baseUrl}/api/create-checkout-session`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          products: state.cartProducts,
+        }),
+      });
+      const data = await response.json();
+      if (data?.url) {
+        const checkoutUrl = data.url;
+        setLoading(false);
+        return push(checkoutUrl);
+      }
+    } catch (error) {
+      throw new Error("Failed to conclude the checkout", error as ErrorOptions);
+    }
+
+    setLoading(false);
+  };
+
+  const randomNumber = (): number => {
+    let res = Math.floor(Math.random() * 6);
+    return res < 2 ? 3 : res;
   };
 
   const handleQuantity = (
@@ -84,7 +111,6 @@ export const CartProductBox = ({
     subQuantity();
   }, [state.cartProducts.length, subTotalDebounced, subQuantity]);
 
-  console.log(amountInCart);
   return (
     <>
       <div className="flex justify-evenly md:flex-row flex-col-reverse md:gap-3 gap-9 w-full pt-8 pl-4 md:pl-0">
@@ -227,7 +253,7 @@ export const CartProductBox = ({
                     {p.title}
                   </h2>
                   <Rating
-                    value={randomNumber}
+                    value={randomNumber()}
                     readonly
                     ratedColor="light-blue"
                     unratedColor="light-blue"
@@ -236,8 +262,9 @@ export const CartProductBox = ({
                     ${p.price}
                   </p>
                   <button
+                    disabled={loading}
                     type="button"
-                    className="h-4 w-20 rounded-xl bg-green-100 text-black-medium text-xs"
+                    className="h-4 w-20 rounded-xl bg-green-100 text-black-medium text-xs disabled:opacity-75"
                     onClick={() => dispatchProductToCart(p)}
                   >
                     Add to Cart

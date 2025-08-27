@@ -12,6 +12,8 @@ export default async function RootDashboard({
 }: Readonly<{ children: React.ReactNode }>) {
   const session = await auth();
 
+  console.log(session?.user);
+
   return (
     <>
       <header className="fixed top-0 z-[999px] min-w-full h-24 bg-[#131921] flex flex-col justify-around">

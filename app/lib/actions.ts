@@ -5,8 +5,6 @@ import { neon } from "@neondatabase/serverless";
 import { v4 as uuidv4 } from "uuid";
 import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 
 export type UserState = {
@@ -46,8 +44,6 @@ export async function registerUser(
     password: formData.get("password"),
   });
 
-  console.log(validatedFields);
-
   if (!validatedFields.success && validatedFields.error) {
     const { email, password, userName } =
       validatedFields.error.flatten().fieldErrors;
@@ -74,8 +70,9 @@ export async function registerUser(
       message: "Database Error: Failed to Register user",
     };
   }
-  revalidatePath("/");
-  redirect("/");
+
+  await authenticate({}, formData);
+  return {};
 }
 
 export async function logout() {
