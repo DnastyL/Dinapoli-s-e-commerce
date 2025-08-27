@@ -21,8 +21,9 @@ type TypeUserForm = {
 
 export const UserForm = ({ handleOnSubmit }: TypeUserForm) => {
   const pathname = usePathname();
-  // const searchParams = useSearchParams();
-  // const callBackUrl = searchParams.get("callbackUrl") || "/";
+  const searchParams = useSearchParams();
+  const callBackUrl = searchParams.get("callbackUrl") || "/";
+
 
   const initialState: UserState = {
     message: null,
@@ -35,6 +36,7 @@ export const UserForm = ({ handleOnSubmit }: TypeUserForm) => {
   );
 
   console.log(state);
+  console.log(callBackUrl)
 
   return (
     <form className="space-y-3" action={formAction}>
@@ -102,7 +104,7 @@ export const UserForm = ({ handleOnSubmit }: TypeUserForm) => {
             </div>
           </div>
         </div>
-        {/* <input type="hidden" name="redirectTo" value={callBackUrl} /> */}
+        <input type="hidden" name="redirectTo" value={callBackUrl} />
         <Button
           type="submit"
           className="mt-4 text-black-medium flex items-center"
@@ -116,10 +118,10 @@ export const UserForm = ({ handleOnSubmit }: TypeUserForm) => {
           aria-live="polite"
           aria-atomic="true"
         >
-          {state.message && (
+          {state?.message && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{state.message}</p>
+              <p className="text-sm text-red-500">{state?.message}</p>
             </>
           )}
         </div>
