@@ -14,7 +14,7 @@ import Link from "next/link";
 import { logout } from "@/app/lib/actions";
 
 export const CategoriesModal = ({ session }: { session: Session | null }) => {
-  const { handleModal,} = useDashboard();
+  const { handleModal } = useDashboard();
   const [axis, setAxis] = useState(0);
   const fakeElectronicItems = ["SSD", "WD", "Screen"];
 
@@ -85,10 +85,8 @@ export const CategoriesModal = ({ session }: { session: Session | null }) => {
                   <div className="group pl-8 h-10 gap-2 hover:bg-blue-gray-100/50 hover:cursor-pointer">
                     <form action={logout} className="w-full h-full">
                       <button
-                        aria-label="Click to log out"
                         type="submit"
                         className="text-black-medium w-full text-sm flex items-center gap-2 h-full"
-                        onClick={() => handleModal(false, false)}
                       >
                       <PowerIcon className="h-6 text-black-medium" />
                         Sign out

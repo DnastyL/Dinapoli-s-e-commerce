@@ -1,5 +1,4 @@
 import type { NextAuthConfig } from "next-auth";
-import { redirect } from "next/navigation";
 
 export const authConfig = {
   pages: {
@@ -8,12 +7,10 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      console.log(isLoggedIn);
-      console.log(nextUrl.pathname);
-      const isOnCartPage = nextUrl.pathname == "/success" || nextUrl.pathname == "/cancel";
+      const isOnCartPage = nextUrl.pathname.startsWith("/checkout");
       if (isOnCartPage) {
         if (isLoggedIn) return true;
-        return false;
+        return Response.redirect(new URL("/", nextUrl));
       } else if (isLoggedIn) {
         return true;
       }

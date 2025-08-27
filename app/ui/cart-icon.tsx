@@ -37,9 +37,9 @@ export const CartIcon = ({ width, height }: CartIconType) => {
           onClick={() => handleModal(true, false)}
           className="h-full sm:h-[45px] sm:group-hover:hover:bg-black/25 group-focus-visible:focus-visible:bg-black/25 rounded-full duration-500 ease-in-out"
         >
-          <ShoppingCartIcon color="white" width={width} height={height} />
+          <ShoppingCartIcon width={width} height={height} />
         </button>
-        <p className="text-white">Cart</p>
+        <p>Cart</p>
       </div>
       {itemsInCart > 0 && (
         <span className="sm:block hidden absolute sm:bottom-6 sm:left-11 md:left-14 bottom-7 bg-green-100 rounded-xl h-5 w-5 text-center text-black text-sm/6">
