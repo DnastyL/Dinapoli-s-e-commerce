@@ -2,6 +2,8 @@ import { UserForm } from "../ui/user-form";
 
 import { Poppins } from "next/font/google";
 import { registerUser } from "../lib/actions";
+import { Suspense } from "react";
+import { ProductSliderSkeleton } from "../ui/skeletons";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -18,7 +20,9 @@ export default function RegisterUser() {
         >
           Create your account
         </h2>
-        <UserForm handleOnSubmit={registerUser} />
+        <Suspense fallback={<ProductSliderSkeleton />}>
+          <UserForm handleOnSubmit={registerUser} />
+        </Suspense>
       </div>
     </div>
   );

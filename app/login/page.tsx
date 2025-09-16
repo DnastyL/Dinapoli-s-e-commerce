@@ -3,6 +3,8 @@ import { UserForm } from "../ui/user-form";
 
 import { Poppins } from "next/font/google";
 import { authenticate } from "../lib/actions";
+import { Suspense } from "react";
+import { ProductSliderSkeleton } from "../ui/skeletons";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -19,7 +21,9 @@ export default function Login() {
         >
           Please log in to continue
         </h2>
-        <UserForm handleOnSubmit={authenticate} />
+        <Suspense fallback={<ProductSliderSkeleton />}>
+          <UserForm handleOnSubmit={authenticate} />
+        </Suspense>
         <p className="text-black-medium text-sm">
           {`Don't have an account? `}
           <Link
