@@ -3,9 +3,15 @@ import { useDashboard } from "@/app/hooks/useContext";
 import { eletronicProducts } from "@/app/lib/definitions";
 import { ActionTypes } from "@/app/context/reducerActions/cartProducts";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-export const ProductsBox = ({electronicProducts}: {electronicProducts: eletronicProducts[] | undefined}) => {
+export const ProductsBox = ({
+  electronicProducts,
+}: {
+  electronicProducts: eletronicProducts[] | undefined;
+}) => {
   const { dispatch, state } = useDashboard();
+  const { push } = useRouter();
 
   const dispatchProducts = (prod: eletronicProducts) => {
     const isInCart = state.cartProducts.find((p) => p.id === prod.id);
@@ -17,12 +23,9 @@ export const ProductsBox = ({electronicProducts}: {electronicProducts: eletronic
       });
   };
 
-
-
   return (
     <>
       {electronicProducts?.map((prod) => (
-
         <div
           key={prod.id}
           className="sm:w-[240px] w-[175px] flex flex-col gap-3 p-2 bg-white border-2 rounded-lg border-b-gray-light"
@@ -32,7 +35,8 @@ export const ProductsBox = ({electronicProducts}: {electronicProducts: eletronic
             src={prod.image_url}
             width={200}
             height={150}
-            className="h-[180px] w-auto"
+            className="h-[180px] w-auto cursor-pointer"
+            onClick={() => push(prod.title.replace('/', '_'))}
           />
           <p
             aria-label="product description"

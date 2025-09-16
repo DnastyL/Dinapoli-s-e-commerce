@@ -3,7 +3,7 @@ export type eletronicProducts = {
   title: string;
   price: number;
   description: string;
-  category: "eletronics";
+  category: "electronics";
   image_url: string;
   rating?: {
     rate: number;

@@ -32,10 +32,11 @@
   flex-direction: column;
 }
 .card .img {
-    background: #8B53FF;
-    width: 148px;
-    height: 148px;
-    border-radius: 50%;
+  background: #8b53ff;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 .card .img img {
   border-radius: 50%;

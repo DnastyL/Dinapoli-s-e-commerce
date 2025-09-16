@@ -64,7 +64,7 @@ export default async function RootDashboard({
 
       <div
         id="dashboard"
-        className="h-screen pt-[96px] sm:overflow-auto overflow-hidden"
+        className="h-screen pt-[96px] sm:overflow-auto overflow-scroll flex flex-col"
       >
         {children}
         <ModalRoot session={session} />

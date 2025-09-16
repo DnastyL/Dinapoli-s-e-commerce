@@ -36,7 +36,6 @@ const config: Config = withMT({
       green: { 100: "#13ce66", 200: "#15803d", 300: "#1a2e05" },
       yellow: "#ffc82c",
       "gray-dark": "#273444",
-      gray: "#8492a6",
       "gray-light": "#d3dce6",
       "black-medium": "#383838",
     },

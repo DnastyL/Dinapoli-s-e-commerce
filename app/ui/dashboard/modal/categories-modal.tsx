@@ -23,8 +23,8 @@ export const CategoriesModal = ({ session }: { session: Session | null }) => {
   }
 
   return (
-    <div className="bg-white w-96 h-full" onClick={(e) => e.stopPropagation()}>
-      <div className="flex items-center w-full bg-[#131921] h-12 justify-between">
+    <div className="bg-white w-full h-full" onClick={(e) => e.stopPropagation()}>
+      <div className="flex items-center w-full bg-[#131921] h-12 sm:justify-between">
         {!!session ? (
           <span className="ml-8 flex items-center gap-2">
             <UserCircleIcon width={26} />

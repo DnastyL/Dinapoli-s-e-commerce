@@ -44,41 +44,67 @@ export function ProductsSlider({
   }, [carousel.current?.offsetWidth]);
 
   return (
-    <div
-      className="relative w-full"
-      onMouseEnter={() => setShowChevron(true)}
-      onMouseLeave={() => setShowChevron(false)}
-      ref={carousel}
-    >
+    <>
       <div
-        className="w-max px-6 flex gap-3 transition-transform"
-        style={{ transform: `translateX(-${axis}px)` }}
+        aria-label="New products on Di Napoli - Carousel"
+        className="relative w-full"
+        onMouseEnter={() => setShowChevron(true)}
+        onMouseLeave={() => setShowChevron(false)}
+        ref={carousel}
       >
-        <ProductsBox electronicProducts={electronicProducts} />
-      </div>
-      <div
-        className={clsx(
-          "absolute h-[220px] inset-0 flex items-center justify-between p-6 transition-all duration-300",
-          { "opacity-0": !showChevron, invisible: !showChevron },
-          { "opacity-100": showChevron, visible: showChevron }
-        )}
-      >
+        {/* <div
+          className={clsx(
+            "absolute z-50 h-[220px] inset-0 flex items-center justify-between p-6 transition-all duration-300",
+            { "opacity-0": !showChevron, invisible: !showChevron },
+            { "opacity-100": showChevron, visible: showChevron }
+          )}
+        > */}
         <IconButton
+          aria-label="roll carousel to the right"
+          type="button"
           onClick={prev}
           color="green"
-          className="w-[30px] h-[30px] rounded-full text-gray-dark"
+          className={clsx(
+            "relative inset-y-36 inset-x-6 transition-all duration-300 w-[30px] h-[30px] rounded-full text-gray-dark z-40",
+            {
+              "opacity-0": !showChevron,
+              invisible: !showChevron,
+            },
+            {
+              "opacity-100": showChevron,
+              visible: showChevron,
+            }
+          )}
         >
           <ChevronLeft size={30} />
         </IconButton>
         <IconButton
+          aria-label="roll carousel to the left"
           type="button"
           color="green"
           onClick={next}
-          className="w-[30px] h-[30px] rounded-full text-gray-dark"
+          className={clsx(
+            "relative inset-y-36 inset-x-[90%] transition-all duration-300 w-[30px] h-[30px] rounded-full text-gray-dark z-40",
+            {
+              "opacity-0": !showChevron,
+              invisible: !showChevron,
+            },
+            {
+              "opacity-100": showChevron,
+              visible: showChevron,
+            }
+          )}
         >
           <ChevronRight size={30} />
         </IconButton>
+        {/* </div> */}
+        <div
+          className="w-max px-6 flex gap-3 transition-transform"
+          style={{ transform: `translateX(-${axis}px)` }}
+        >
+          <ProductsBox electronicProducts={electronicProducts} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

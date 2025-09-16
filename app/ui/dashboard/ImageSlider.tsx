@@ -3,9 +3,9 @@ import { useCallback, useEffect, useState } from "react";
 import "./image-slider.css";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import Apple from "@/public/apple-ecosystem-web-banner_1_.webp";
-import OnePlus from "@/public/oneplus-web.webp";
-import GetMore from "@/public/getmore-webbanner.webp";
+import PS5Pro from "@/public/playstation-5-pro-first-look_kxw4.600.webp";
 import ArtBoard from "@/public/artboard_1-1.webp";
+import GamingPc from "@/public/gaming pc advertisement.jpg";
 import Image from "next/image";
 
 type CarouselType = {
@@ -15,8 +15,8 @@ type CarouselType = {
 export const ImageSlider = ({ autoSlideInterval }: CarouselType) => {
   const imgs = [
     { id: 1, alt: "Apple Products", ...Apple },
-    { id: 2, alt: "OnePlus", ...OnePlus },
-    { id: 3, alt: "GetMoreProducts", ...GetMore },
+    { id: 2, alt: "PS5Pro", ...PS5Pro },
+    { id: 3, alt: "GamingPc", ...GamingPc },
     { id: 4, alt: "ArtBoardProducts", ...ArtBoard },
   ];
   const [curr, setCurr] = useState(0);
@@ -39,7 +39,7 @@ export const ImageSlider = ({ autoSlideInterval }: CarouselType) => {
   return (
     <section
       aria-label="Image Slider"
-      className="max-w-[1152px] overflow-hidden relative"
+      className="w-[1152px] overflow-hidden relative cursor-pointer"
       onMouseEnter={() => setAutoSlide(false)}
       onMouseLeave={() => setAutoSlide(true)}
       onFocus={() => setAutoSlide(false)}
@@ -55,19 +55,22 @@ export const ImageSlider = ({ autoSlideInterval }: CarouselType) => {
         Skip Image Slider Controls
       </a>
       <div
-        className="flex transition-transform ease-out duration-500"
+        className="flex  transition-transform ease-out max-h-[300px] duration-500"
         style={{ transform: `translateX(-${curr * 100}%)` }}
       >
         {[
           ...imgs.map((i, index) => (
-            <Image
-              width={i.width}
-              height={i.height}
-              key={i.id}
-              src={i.src}
-              alt={i.alt}
-              aria-hidden={curr !== index}
-            />
+            <div key={i.id} className="w-full flex-shrink-0 flex items-center ">
+              <Image
+                width={i.width}
+                height={i.height}
+                key={i.id}
+                src={i.src}
+                alt={i.alt}
+                aria-hidden={curr !== index}
+                className="w-full max-h-full object-contain"
+              />
+            </div>
           )),
         ]}
       </div>
