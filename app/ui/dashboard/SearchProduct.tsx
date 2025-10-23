@@ -1,11 +1,27 @@
 "use client";
+import { eletronicProducts } from "@/app/lib/definitions";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { IconButton } from "@material-tailwind/react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
-import { IconButton } from "@material-tailwind/react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
-export const SearchProduct = () => {
+export const SearchProduct = ({
+  allProducts,
+}: {
+  allProducts: eletronicProducts[] | undefined;
+}) => {
   const [query, setQuery] = useState<string | undefined>(undefined);
+  const allCategories = () => {
+    const categoriesSet = new Set<string>();
+    if (allProducts) {
+      for (const product of allProducts) {
+        categoriesSet.add(product.category);
+      }
+      return {
+        categories: Array.from(categoriesSet),
+      };
+    }
+  };
   const [categorySelected, setCategorySelected] = useState("All");
   const searchParams = useSearchParams();
   const { replace, push } = useRouter();
@@ -14,8 +30,6 @@ export const SearchProduct = () => {
   const handleSearch = (inputQuery: string | undefined) => {
     return inputQuery ? setQuery(inputQuery.trim()) : setQuery(undefined);
   };
-
-    console.log(query)
   const handleQuery = () => {
     const params = new URLSearchParams(searchParams);
 
@@ -50,8 +64,14 @@ export const SearchProduct = () => {
           onChange={(e) => setCategorySelected(e.target.value)}
           className="sm:block hidden w-40 peer cursor-pointer rounded-l-md border-gray py-2 text-sm outline-2 bg-[#E6E6E6] hover:bg-[#dadada] focus:bg-[#dadada] placeholder:text-black text-black"
         >
-          <option value="All Items">All</option>
-          <option value="Electronics">Electronics</option>
+          <option key={0} value="All">
+            All
+          </option>
+          {allCategories()?.categories.map((p, i) => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
         </select>
         <input
           type="text"

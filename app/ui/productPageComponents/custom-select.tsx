@@ -60,8 +60,7 @@ export const CustomSelect = ({
   // Handles keyboard events on the main button and the options.
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     let isOpenCopy = !isOpen;
-    console.log(event.key, focusedOption);
-    console.log("isOpen", isOpen);
+
     if (event.key === " ") {
       event.preventDefault(); // Prevent default button behavior
       setIsOpen(isOpenCopy);

@@ -6,7 +6,6 @@ import { ProductsBox } from "@/app/ui/dashboard/products-box";
 import Link from "next/link";
 import { Poppins } from "next/font/google";
 
-
 const poppins = Poppins({
   subsets: ["latin"],
   weight: "400",
@@ -21,8 +20,11 @@ export default async function SearchResults({
     category: string;
   };
 }) {
-  const electronicsFiltered = await fetchFilteredEletronics(searchParams.query);
-  const allElectronics = await fetchElectronicProducts();
+  const electronicsFiltered = await fetchFilteredEletronics(
+    searchParams.query,
+    searchParams.category
+  );
+  const { electronicProducts } = await fetchElectronicProducts();
 
   return (
     <main className="sm:h-full h-[814px] w-full overflow-y-auto overflow-x-hidden">
@@ -33,16 +35,14 @@ export default async function SearchResults({
               className={`${poppins.variable} font-poppins text-black-medium`}
             >
               Products not found with search term{" "}
-              <strong>{searchParams.query}</strong>
+              <strong>{searchParams.query}</strong> in category{" "}
+              <strong>{searchParams.category}</strong>
             </h1>
             <h2
               className={`${poppins.variable} font-poppins text-black-medium`}
             >
               Return to{" "}
-              <Link
-                href="/"
-                className="text-green-400 hover:text-green-400/50"
-              >
+              <Link href="/" className="text-green-400 hover:text-green-400/50">
                 dashboard
               </Link>
             </h2>
@@ -56,7 +56,7 @@ export default async function SearchResults({
               Top Deals
             </h2>
             <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 pt-6">
-              <ProductsBox electronicProducts={allElectronics} />
+              <ProductsBox electronicProducts={electronicProducts} />
             </div>
           </div>
         </>

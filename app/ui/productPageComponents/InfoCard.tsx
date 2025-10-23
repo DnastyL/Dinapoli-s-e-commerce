@@ -19,7 +19,6 @@ export const InfoCard = ({
   const { dispatch, state } = useDashboard();
   const [quantity, setQuantity] = useState(1);
   const { push } = useRouter();
-  console.log(product);
   async function handleCheckout() {
     if (!user) return push("/login");
     setLoading(true);

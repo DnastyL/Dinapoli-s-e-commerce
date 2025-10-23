@@ -19,7 +19,7 @@ const handleCreateStripeProduct = async (
         const newStripeP = await stripe.products.create({
           id: product.id.toString(),
           name: product.title,
-          images: [product.image_url],
+          images: [...product.image_url],
           default_price_data: {
             currency: "usd",
             unit_amount: Math.round(product.price * 100),

@@ -30,9 +30,10 @@ export const ProductsBox = ({
           key={prod.id}
           className="sm:w-[240px] w-[175px] flex flex-col gap-3 p-2 bg-white border-2 rounded-lg border-b-gray-light"
         >
+          
           <Image
             alt="product image"
-            src={prod.image_url}
+            src={prod.image_url[0] as string}
             width={200}
             height={150}
             className="h-[180px] w-auto cursor-pointer"

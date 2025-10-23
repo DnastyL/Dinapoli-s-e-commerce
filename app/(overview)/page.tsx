@@ -5,10 +5,11 @@ import { ProductsSlider } from "../ui/dashboard/ProductsSlider";
 import { fetchElectronicProducts } from "@/app/lib/data";
 
 export default async function Dashboard() {
-  const electronicProducts = await fetchElectronicProducts();
+  const { electronicProducts, cellPhones, gamingPcs } =
+    await fetchElectronicProducts();
 
   return (
-    <main className="pt-20 h-full flex-grow overflow-hidden">
+    <main className="pt-20 h-full flex-grow overflow-auto">
       <div className="flex items-center justify-center pb-3">
         <ImageSlider autoSlideInterval={3000} />
       </div>
@@ -18,7 +19,13 @@ export default async function Dashboard() {
             <h2 className="font-bold font-sans text-xl text-black-medium">
               New on Di Napoli
             </h2>
-            <ProductsSlider electronicProducts={electronicProducts} />
+            <ProductsSlider
+              electronicProducts={electronicProducts?.slice(0, 6)} showCategory={false} 
+            />
+
+            <ProductsSlider electronicProducts={cellPhones} />
+
+            <ProductsSlider electronicProducts={gamingPcs} />
           </div>
         </div>
       </section>

@@ -6,13 +6,14 @@ import { ModalRoot } from "../ui/dashboard/modal/ModalRoot";
 import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/auth";
+import { fetchElectronicProducts } from "../lib/data";
 
 export default async function RootDashboard({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const session = await auth();
+  const {electronicProducts} = await fetchElectronicProducts();
 
-  console.log(session?.user);
 
   return (
     <>
@@ -37,7 +38,7 @@ export default async function RootDashboard({
             </div>
           </div>
           <div className="lgg:w-[850px] lg:w-[650px] w-96 hidden sm:flex">
-            <SearchProduct />
+            <SearchProduct allProducts={electronicProducts} />
           </div>
           {!!session ? (
             <div className="sm:flex sm:items-center gap-4  hidden">
@@ -58,7 +59,7 @@ export default async function RootDashboard({
           )}
         </div>
         <div className="w-full sm:hidden flex items-center  pl-2 h-full">
-          <SearchProduct />
+          <SearchProduct allProducts={electronicProducts} />
         </div>
       </header>
 
@@ -67,7 +68,7 @@ export default async function RootDashboard({
         className="h-screen pt-[96px] sm:overflow-auto overflow-scroll flex flex-col"
       >
         {children}
-        <ModalRoot session={session} />
+        <ModalRoot session={session} products={electronicProducts} />
         <footer className="sm:hidden flex items-center justify-around bg-[#131921] w-full">
           <Link
             href="/"

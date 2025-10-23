@@ -17,7 +17,7 @@ export const ListItem = ({ handleAxis, category, items }: ListItemProps) => {
     const query = item.toLocaleLowerCase();
     const params = new URLSearchParams(searchParams);
     params.set("query", query);
-    params.set("categories", category);
+    params.set("category", category);
 
     replace(`/search-results?${params.toString()}`);
   };
@@ -43,7 +43,9 @@ export const ListItem = ({ handleAxis, category, items }: ListItemProps) => {
           <a
             key={item}
             className="group pl-8 h-8 hover:bg-blue-gray-100/50 hover:cursor-pointer flex items-center"
-            onClick={() => {setQuery(item), handleModal(false, false)}}
+            onClick={() => {
+              setQuery(item), handleModal(false, false);
+            }}
           >
             <p className="text-black-medium w-[85%] text-sm">{item}</p>
           </a>

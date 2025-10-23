@@ -35,8 +35,6 @@ export const UserForm = ({ handleOnSubmit }: TypeUserForm) => {
     initialState
   );
 
-  console.log(state);
-  console.log(callBackUrl)
 
   return (
     <form className="space-y-3" action={formAction}>

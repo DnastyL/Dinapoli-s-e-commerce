@@ -24,6 +24,7 @@ export const CartProductBox = ({
   const [amountInCart, setAmountInCart] = useState(0);
   const { push } = useRouter();
 
+
   const handleCheckout = async () => {
     if (!user) return push(`/login`);
     setLoading(true);
@@ -124,7 +125,7 @@ export const CartProductBox = ({
                 <div className="flex pl-4 pt-5 md:flex-row flex-col gap-5 border-b border-[#ccc] h-full">
                   <Image
                     alt={p.description}
-                    src={p.image_url}
+                    src={p.image_url[0]}
                     height={180}
                     width={180}
                     className="h-[180px]"
@@ -204,7 +205,7 @@ export const CartProductBox = ({
               <p className="text-black-medium text-lg">
                 Subtotal ({amountInCart}):{" "}
                 <span className="text-black-medium font-semibold">
-                  ${subTotal}
+                  ${subTotal.toFixed(2)}
                 </span>
               </p>
             </div>
@@ -220,7 +221,7 @@ export const CartProductBox = ({
                   <p className="text-black-medium text-lg">
                     Subtotal ({amountInCart}):{" "}
                     <span className="text-black-medium font-semibold">
-                      ${subTotal}
+                      ${subTotal.toFixed(2)}
                     </span>
                   </p>
                 </div>
@@ -245,7 +246,7 @@ export const CartProductBox = ({
                   width={100}
                   height={100}
                   alt={p.title}
-                  src={p.image_url}
+                  src={p.image_url[0]}
                   className="h-[100px] w-[100px]"
                 />
                 <div className="flex py-2 flex-col gap-1">

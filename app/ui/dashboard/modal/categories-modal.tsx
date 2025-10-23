@@ -6,24 +6,57 @@ import {
   UserCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronRight } from "react-feather";
 import { ListItem } from "./categoriesModalCompo/list-items";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { logout } from "@/app/lib/actions";
+import { eletronicProducts } from "@/app/lib/definitions";
 
-export const CategoriesModal = ({ session }: { session: Session | null }) => {
-  const { handleModal,} = useDashboard();
+export const CategoriesModal = ({
+  session,
+  products,
+}: {
+  session: Session | null;
+  products: eletronicProducts[] | undefined;
+}) => {
+  const { handleModal } = useDashboard();
   const [axis, setAxis] = useState(0);
-  const fakeElectronicItems = ["SSD", "WD", "Screen"];
+  //initiating an array of the products categories
+  const [productCategories, setProductCategories] = useState(() => {
+    let categories = new Set(products?.map((p) => p.category));
+    return [...categories];
+  });
+  //Unique category value for List Item componenets
+  const [category, setCategory] = useState("Monitor");
+  const [productsFirstName, setProductsFirstName] = useState([""]);
 
   function handleAxis(axis: number) {
     setAxis(axis);
   }
 
+  function handleListItem(category: string) {
+    setCategory(category);
+    handleAxis(1);
+  }
+
+  useEffect(() => {
+    let titleSplit = new Set<string>();
+    if (!!products) {
+      //filtering products by category
+      const categoryFiltered = products.filter((p) => p.category == category);
+      //adding first product word to Set
+      categoryFiltered.map((p) => titleSplit.add(p.title.split(" ")[0]));
+      setProductsFirstName([...titleSplit]);
+    }
+  }, [category, products]);
+
   return (
-    <div className="bg-white w-full h-full" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="bg-white w-full h-full"
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className="flex items-center w-full bg-[#131921] h-12 sm:justify-between">
         {!!session ? (
           <span className="ml-8 flex items-center gap-2">
@@ -63,19 +96,23 @@ export const CategoriesModal = ({ session }: { session: Session | null }) => {
                 <h2 className="text-black-medium ml-8 font-bold text-lg">
                   Shop
                 </h2>
-                <a
-                  aria-label="Open Eletronic Category"
-                  className="group pl-8 h-10 hover:bg-blue-gray-100/50 hover:cursor-pointer flex items-center"
-                  onClick={() => handleAxis(1)}
-                >
-                  <p className="text-black-medium w-[85%] text-sm">
-                    Electronics
-                  </p>{" "}
-                  <ChevronRight
-                    className="group-hover:text-black text-gray"
-                    size={22}
-                  />
-                </a>
+
+                {productCategories.map((category) => (
+                  <a
+                    key={category}
+                    aria-label={`Open ${category} options`}
+                    className="group pl-8 h-10 hover:bg-blue-gray-100/50 hover:cursor-pointer flex items-center"
+                    onClick={() => handleListItem(category)}
+                  >
+                    <p className="text-black-medium w-[85%] text-sm">
+                      {category}
+                    </p>{" "}
+                    <ChevronRight
+                      className="group-hover:text-black text-gray"
+                      size={22}
+                    />
+                  </a>
+                ))}
               </div>
               <div className="flex flex-col gap-2 justify-around py-3">
                 <h2 className="text-black-medium ml-8 font-bold text-lg">
@@ -90,7 +127,7 @@ export const CategoriesModal = ({ session }: { session: Session | null }) => {
                         className="text-black-medium w-full text-sm flex items-center gap-2 h-full"
                         onClick={() => handleModal(false, false)}
                       >
-                      <PowerIcon className="h-6 text-black-medium" />
+                        <PowerIcon className="h-6 text-black-medium" />
                         Sign out
                       </button>
                     </form>
@@ -107,9 +144,9 @@ export const CategoriesModal = ({ session }: { session: Session | null }) => {
             </div>
           </div>
           <ListItem
-            category="Electronics"
+            category={category}
             handleAxis={handleAxis}
-            items={fakeElectronicItems}
+            items={productsFirstName}
           />
         </div>
       </section>

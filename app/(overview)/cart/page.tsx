@@ -4,7 +4,7 @@ import { CartProductBox } from "@/app/ui/cartPageComponents/cart-product-box";
 import { auth } from "@/auth";
 
 export default async function CartPage() {
-  const eletronicProducts = await fetchElectronicProducts();
+  const {electronicProducts} = await fetchElectronicProducts();
   const session = await auth();
  
 
@@ -13,7 +13,7 @@ export default async function CartPage() {
   return (
     <section className="min-h-[814px] w-full">
       <CartProductBox
-        electronicProducts={eletronicProducts}
+        electronicProducts={electronicProducts?.slice(6)}
         user={user}
       />
     </section>

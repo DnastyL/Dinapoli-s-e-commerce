@@ -9,14 +9,16 @@ import { eletronicProducts } from "@/app/lib/definitions";
 
 export function ProductsSlider({
   electronicProducts,
+  showCategory = true,
 }: {
   electronicProducts: eletronicProducts[] | undefined;
+  showCategory?: boolean;
 }) {
   const carousel = useRef<HTMLDivElement>(null);
   const [carouselWidth, setCarouselWidth] = useState(0);
   const [axis, setAxis] = useState(0);
   const [showChevron, setShowChevron] = useState(false);
-
+  const electronicProductsLength = electronicProducts?.length ?? 0;
   const prev = () => {
     if (axis == 0) {
       return setAxis(carouselWidth);
@@ -42,9 +44,13 @@ export function ProductsSlider({
         carousel.current.scrollWidth - carousel.current.offsetWidth
       );
   }, [carousel.current?.offsetWidth]);
-
   return (
     <>
+      {showCategory && (
+        <h2 className="font-bold font-sans text-xl text-black-medium">
+          {electronicProducts ? electronicProducts[0].category : "Products"}
+        </h2>
+      )}
       <div
         aria-label="New products on Di Napoli - Carousel"
         className="relative w-full"
@@ -59,44 +65,51 @@ export function ProductsSlider({
             { "opacity-100": showChevron, visible: showChevron }
           )}
         > */}
-        <IconButton
-          aria-label="roll carousel to the right"
-          type="button"
-          onClick={prev}
-          color="green"
-          className={clsx(
-            "relative inset-y-36 inset-x-6 transition-all duration-300 w-[30px] h-[30px] rounded-full text-gray-dark z-40",
-            {
-              "opacity-0": !showChevron,
-              invisible: !showChevron,
-            },
-            {
-              "opacity-100": showChevron,
-              visible: showChevron,
-            }
-          )}
-        >
-          <ChevronLeft size={30} />
-        </IconButton>
-        <IconButton
-          aria-label="roll carousel to the left"
-          type="button"
-          color="green"
-          onClick={next}
-          className={clsx(
-            "relative inset-y-36 inset-x-[90%] transition-all duration-300 w-[30px] h-[30px] rounded-full text-gray-dark z-40",
-            {
-              "opacity-0": !showChevron,
-              invisible: !showChevron,
-            },
-            {
-              "opacity-100": showChevron,
-              visible: showChevron,
-            }
-          )}
-        >
-          <ChevronRight size={30} />
-        </IconButton>
+        {electronicProductsLength > 2 ? (
+          <>
+            <IconButton
+              aria-label="roll carousel to the right"
+              type="button"
+              onClick={prev}
+              color="green"
+              className={clsx(
+                "relative inset-y-36 inset-x-6 transition-all duration-300 w-[30px] h-[30px] rounded-full text-gray-dark z-40",
+                {
+                  "opacity-0": !showChevron,
+                  invisible: !showChevron,
+                },
+                {
+                  "opacity-100": showChevron,
+                  visible: showChevron,
+                }
+              )}
+            >
+              <ChevronLeft size={30} />
+            </IconButton>
+            <IconButton
+              aria-label="roll carousel to the left"
+              type="button"
+              color="green"
+              onClick={next}
+              className={clsx(
+                "relative inset-y-36 inset-x-[90%] transition-all duration-300 w-[30px] h-[30px] rounded-full text-gray-dark z-40",
+                {
+                  "opacity-0": !showChevron,
+                  invisible: !showChevron,
+                },
+                {
+                  "opacity-100": showChevron,
+                  visible: showChevron,
+                }
+              )}
+            >
+              <ChevronRight size={30} />
+            </IconButton>
+          </>
+        ) : (
+          <></>
+        )}
+
         {/* </div> */}
         <div
           className="w-max px-6 flex gap-3 transition-transform"

@@ -1,5 +1,6 @@
 import { fetchFilteredEletronics } from "@/app/lib/data";
 import { InfoCard } from "@/app/ui/productPageComponents/InfoCard";
+import { ProductAbout } from "@/app/ui/productPageComponents/ProductAbout";
 import { RatingComponent } from "@/app/ui/rating";
 import { auth } from "@/auth";
 import Image from "next/image";
@@ -15,6 +16,8 @@ export default async function Page({
   const session = await auth();
   const pDescriptionSplit = product?.[0].description.split(/[;]/);
 
+  const arrObjKeys = Array.from(Object.keys(product?.[0].about ?? {}));
+  const arrObjValues = Array.from(Object.values(product?.[0].about ?? {}));
 
   function randomNumber() {
     let res = Math.floor(Math.random() * 6);
@@ -22,15 +25,33 @@ export default async function Page({
   }
   const randN = randomNumber();
 
+  function formatObjKeys() {
+    if (!!arrObjKeys.length == false) return [];
+    let keys = [];
+    for (const key of arrObjKeys) {
+      //Iterate through the reversed array
+      let words = key.split("_"); //Removing the _ of keys and separating them into an array of words ['digital', 'storage', 'capacity']
+      const formattedWords = words.map((w) => {
+        //Iterate through the array of words and create a new array from the result
+        return w.charAt(0).toUpperCase() + w.slice(1); //Return the first character of the word in UpperCase + the rest at index(1) ['Digital', 'Storage, 'Capacity']
+      });
+      keys.push(formattedWords.join(" ")); //Join and push all words with a space separator to keys array
+    }
+    return keys;
+  }
+
   return (
-    <div className="overflow-auto">
+    <div className="overflow-auto bg-white h-full">
       <section className="w-full  md:border-y border-blue-gray-200 mt-8">
         {product?.map((p) => (
-          <div key={p.id} className="flex py-8 gap-3 flex-wrap justify-around">
+          <div
+            key={p.id}
+            className="flex pt-8 pb-4 gap-3 flex-wrap justify-around"
+          >
             <div key={p.id} className="text-black flex flex-wrap px-20 gap-6 ">
               <Image
                 alt={p.title}
-                src={p.image_url}
+                src={p.image_url[0]}
                 width={400}
                 height={300}
                 className="h-[300px] pt-2"
@@ -74,10 +95,19 @@ export default async function Page({
                     {p.price}
                   </p>
                 </div>
-                <div className="mt-2">
-                  <h2 className="text-[#131921] mb-3 font-bold">
+                {!!p.about && (
+                  <div className="mt-2 pb-2 border-b border-blue-gray-200">
+                    <ProductAbout
+                      aboutTopics={formatObjKeys()}
+                      aboutValues={arrObjValues}
+                    />
+                  </div>
+                )}
+
+                <div className="mt-4">
+                  <h1 className="text-[#131921] mb-3 font-bold text-xl">
                     About this item
-                  </h2>
+                  </h1>
                   <ul className="list-disc max-w-[550px] pl-4">
                     {pDescriptionSplit?.map((d) => (
                       <li
@@ -92,7 +122,7 @@ export default async function Page({
               </div>
             </div>
 
-            <div className="border rounded border-blue-gray-200 w-[240px] h-[450px]">
+            <div className="border rounded md:ml-28 border-blue-gray-200 w-[240px] h-[450px]">
               <h2
                 aria-label="product-price"
                 className="text-[#131921] font-normal text-2xl p-6"

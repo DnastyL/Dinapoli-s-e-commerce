@@ -7,6 +7,10 @@ const nextConfig = {
         hostname: "fakestoreapi.com",
         port: "",
       },
+      {
+        hostname: "m.media-amazon.com",
+        protocol: "https",
+      },
     ],
   },
 };

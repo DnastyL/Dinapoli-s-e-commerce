@@ -105,7 +105,7 @@ export const CartModal = () => {
             >
               <Image
                 alt="product-image"
-                src={prod.image_url}
+                src={prod.image_url[0]}
                 width={200}
                 height={150}
                 className="h-[150px] w-[150px] aspect-square"

@@ -6,8 +6,15 @@ import { CartModal } from "./cart-modal";
 import { CategoriesModal } from "./categories-modal";
 import clsx from "clsx";
 import { Session } from "next-auth";
+import { eletronicProducts } from "@/app/lib/definitions";
 
-export const ModalRoot = ({ session }: { session: Session | null }) => {
+export const ModalRoot = ({
+  session,
+  products,
+}: {
+  session: Session | null;
+  products: eletronicProducts[] | undefined;
+}) => {
   const { isCartOpen, isCategoriesOpen, handleModal } = useDashboard();
 
   useEffect(() => {
@@ -25,7 +32,7 @@ export const ModalRoot = ({ session }: { session: Session | null }) => {
     <>
       <div
         className={clsx(
-          "fixed inset-0 z-[999px] bg-black/50 transition-all ease-in-out duration-1000",
+          "fixed inset-0 z-[999] bg-black/50 transition-all ease-in-out duration-1000",
           {
             "visible opacity-100": isCategoriesOpen || isCartOpen,
             "invisible opacity-0": !isCartOpen && !isCategoriesOpen,
@@ -43,7 +50,7 @@ export const ModalRoot = ({ session }: { session: Session | null }) => {
               : `translateX(-599px)`,
           }}
         >
-          <CategoriesModal session={session} />
+          <CategoriesModal session={session} products={products}/>
         </div>
 
         <div
