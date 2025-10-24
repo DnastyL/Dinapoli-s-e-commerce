@@ -13,7 +13,6 @@
 # next.js
 /.next/
 /out/
-/seed/route.ts
 
 # production
 /build
