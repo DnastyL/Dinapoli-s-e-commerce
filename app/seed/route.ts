@@ -1,7 +1,7 @@
-// import { fetchElectronicProducts } from "../lib/data";
-// import { neon } from "@neondatabase/serverless";
-// import bcrypt from "bcrypt";
-// import { eletronicProducts } from "../lib/definitions";
+import { fetchElectronicProducts } from "../lib/data";
+import { neon } from "@neondatabase/serverless";
+import bcrypt from "bcrypt";
+import { eletronicProducts } from "../lib/definitions";
 
 // const users = [
 //   {
@@ -164,7 +164,7 @@
 // },
 
 // ];
-// const sql = neon(`${process.env.DATABASE_URL}`);
+const sql = neon(`${process.env.DATABASE_URL}`);
 
 // async function seedProdutcs() {
 //   const prod = await fetchElectronicProducts();
@@ -246,16 +246,16 @@
 //   return insertedUsers;
 // }
 
-// export async function GET() {
-//   try {
-//     await sql`BEGIN`;
-//     await seedVideoGames();
-//     await sql`COMMIT`;
-//     return Response.json({
-//       message: "Gaming pcs seeded successfully",
-//     });
-//   } catch (err) {
-//     await sql`ROLLBACK`;
-//     return Response.json({ err }, { status: 500 });
-//   }
-// }
+export async function GET() {
+  try {
+    await sql`BEGIN`;
+    // await seedVideoGames();
+    await sql`COMMIT`;
+    return Response.json({
+      message: "Gaming pcs seeded successfully",
+    });
+  } catch (err) {
+    await sql`ROLLBACK`;
+    return Response.json({ err }, { status: 500 });
+  }
+}
